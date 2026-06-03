@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
  * @date 2020/07/08
  */
 public class EnumExample {
-    private ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("thread-call-runner-%d").build();
-    private ExecutorService taskExe = new ThreadPoolExecutor(3, 4, 200L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), namedThreadFactory);
+    private static ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("thread-call-runner-%d").build();
+    private static ExecutorService taskExe = new ThreadPoolExecutor(3, 4, 200L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), namedThreadFactory);
 
     public static void main(String[] args) {
         List<Object> list = new ArrayList<>();
@@ -23,8 +23,13 @@ public class EnumExample {
         list.add("3");
         list.add("4");
 
-        for (int i = 0; i < list.size(); i++) {
-            taskExe.execute(System.out.println(getOb(i)));
+        try {
+            for (int i = 0; i < list.size(); i++) {
+                final int index = i;
+                taskExe.execute(() -> System.out.println(getOb(index)));
+            }
+        } finally {
+            taskExe.shutdown();
         }
 //        list.stream().map().collect(Collectors.toList());
     }

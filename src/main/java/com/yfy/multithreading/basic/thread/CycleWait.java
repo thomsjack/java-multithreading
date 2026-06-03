@@ -5,7 +5,7 @@ public class CycleWait implements Runnable {
 
     public void run() {
         try {
-            Thread.currentThread().sleep(5000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -17,7 +17,7 @@ public class CycleWait implements Runnable {
         Thread t = new Thread(cw);
         t.start();
 //        while (cw.value == null){
-//            Thread.currentThread().sleep(100);
+//            Thread.sleep(100);
 //        }
         t.join();
         System.out.println("value : " + cw.value);
