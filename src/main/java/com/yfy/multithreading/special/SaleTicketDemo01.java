@@ -48,60 +48,30 @@ public class SaleTicketDemo01 {
 //            public abstract void run();
 //        }
 
+        // 使用 Lambda 表达式创建并启动线程（推荐：简洁，高内聚）
         new Thread(() -> {
             for (int i = 1; i <= 40; i++) ticket.sale();
         }, "A").start();
+        
         new Thread(() -> {
             for (int i = 1; i <= 40; i++) ticket.sale();
         }, "B").start();
+        
         new Thread(() -> {
             for (int i = 1; i <= 40; i++) ticket.sale();
         }, "C").start();
 
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 1; i <= 40; i++) ticket.sale();
-                {
-                    ticket.sale();
-                }
-            }
-        }, "A").start();
-
-
-        //Thread(Runnable target, String name) Allocates a new Thread object.
-        /*new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                for (int i = 1; i <=40; i++) ticket.sale();
-                {
-                    ticket.sale();
-                }
-            }
-        }, "A").start();
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                for (int i = 1; i <=40; i++)
-                {
-                    ticket.sale();
-                }
-            }
-        }, "B").start();*/
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 1; i <= 40; i++) {
-                    ticket.sale();
-                }
-            }
-        }, "C").start();
-
-
+        /*
+         * 对比：下面是传统的匿名内部类写法（已注释，用于对比学习）
+         * 
+         * new Thread(new Runnable() {
+         *     @Override
+         *     public void run() {
+         *         for (int i = 1; i <= 40; i++) {
+         *             ticket.sale();
+         *         }
+         *     }
+         * }, "A-Legacy").start();
+         */
     }
 }
